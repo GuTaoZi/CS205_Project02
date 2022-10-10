@@ -242,6 +242,24 @@ Project02_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Project02_SOURCE_DIR:STATIC=E:/Cpp/Project02
 
+//Value Computed by CMake
+Project02_re_BINARY_DIR:STATIC=E:/Cpp/Project02/cmake-build-debug
+
+//Value Computed by CMake
+Project02_re_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Project02_re_SOURCE_DIR:STATIC=E:/Cpp/Project02
+
+//Value Computed by CMake
+remake_calculator_BINARY_DIR:STATIC=E:/Cpp/Project02/cmake-build-debug
+
+//Value Computed by CMake
+remake_calculator_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+remake_calculator_SOURCE_DIR:STATIC=E:/Cpp/Project02
+
 
 ########################
 # INTERNAL cache entries

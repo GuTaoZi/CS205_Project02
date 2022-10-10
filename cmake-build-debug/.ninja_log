@@ -1,0 +1,17 @@
+# ninja log v5
+28	4105	6870641189415618	CMakeFiles/remake_calculator.dir/src/operators.cpp.obj	f40b31c517d485e4
+1	4117	6870641189571851	CMakeFiles/remake_calculator.dir/src/main.cpp.obj	fd7f2510e28fe186
+32	4116	6870641189571851	CMakeFiles/remake_calculator.dir/src/utils.cpp.obj	5166c95750496928
+0	4663	6870648889044253	CMakeFiles/Project02.dir/main.cpp.obj	2ebae50dcda48e89
+15	5174	6870649987765844	CMakeFiles/Project02.dir/utils.cpp.obj	dca7cf1b8f6b4421
+10	5179	6870649987765844	CMakeFiles/Project02.dir/operators.cpp.obj	e3bc52b9e156b6b3
+4	5224	6870649988235193	CMakeFiles/Project02.dir/main.cpp.obj	cd83641cdd86942f
+9	5022	6870650821259030	CMakeFiles/Project02.dir/operators.cpp.obj	e3bc52b9e156b6b3
+4	5038	6870650821415290	CMakeFiles/Project02.dir/main.cpp.obj	cd83641cdd86942f
+13	5245	6870650823451100	CMakeFiles/Project02.dir/utils.cpp.obj	dca7cf1b8f6b4421
+2	6657	6870651736479795	CMakeFiles/Project02.dir/main.cpp.obj	cd83641cdd86942f
+7	6715	6870651737108937	CMakeFiles/Project02.dir/operators.cpp.obj	e3bc52b9e156b6b3
+11	7523	6870651745086576	CMakeFiles/Project02.dir/utils.cpp.obj	dca7cf1b8f6b4421
+7524	12091	6870651790944596	Project02.exe	9fc69901bcb16570
+9	4528	6870651942796338	CMakeFiles/Project02.dir/main.cpp.obj	cd83641cdd86942f
+4528	7790	6870651975497444	Project02.exe	9fc69901bcb16570
