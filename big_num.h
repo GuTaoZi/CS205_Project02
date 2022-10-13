@@ -1,5 +1,6 @@
 #ifndef REMAKE_CALCULATOR_BIG_NUM_H
 #define REMAKE_CALCULATOR_BIG_NUM_H
+
 #include "bits/stdc++.h"
 
 #define ll long long
@@ -14,9 +15,11 @@ const regex float_with_e("^[+-]?[0-9]+.[0-9]+e[+-]?[0-9]+$");
 const regex float_with_suffix("^[+-]?[0-9]+.[0-9]+[kKmMgGtT]$");
 const regex abbreviated_float("^[+-]?.[0-9]+$");
 
+const int DIVIDE_PRECISION = 500;
+
 enum data_type
 {
-    NaN, PURE_INT, INT_WITH_E, INT_WITH_SUFFIX, PURE_FLOAT, FLOAT_WITH_E, FLOAT_WITH_SUFFIX, ABBR_FLOAT
+    INF,NaN, PURE_INT, INT_WITH_E, INT_WITH_SUFFIX, PURE_FLOAT, FLOAT_WITH_E, FLOAT_WITH_SUFFIX, ABBR_FLOAT
 };
 
 // PURE_INT : 19260817
@@ -275,15 +278,25 @@ struct BigNum
 
 //utils
 BigNum standardize_exp(BigNum a);
+
+bool is_zero(BigNum a);
+
 void print_BigNum(BigNum a, ll constraint);
 
 //operators
 BigNum operator+(BigNum a, BigNum b);
+
 BigNum operator-(BigNum a, BigNum b);
+
 BigNum operator*(BigNum a, BigNum b);
+
 BigNum operator/(BigNum a, BigNum b);
+
+BigNum operator-(BigNum a);
+
 bool operator<(BigNum a, BigNum b);
 
+bool operator==(BigNum a, BigNum b);
 
 
 

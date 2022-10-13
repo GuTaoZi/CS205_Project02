@@ -7,6 +7,10 @@ const string type_name[] = {"NaN", "PURE_INT", "INT_WITH_E", "INT_WITH_SUFFIX", 
 
 BigNum standardize_exp(BigNum a)
 {
+    if(is_zero(a))
+    {
+        return BigNum();
+    }
     BigNum c;
     c.type = PURE_INT;
     c.len = 0;
@@ -23,6 +27,10 @@ BigNum standardize_exp(BigNum a)
             c.val[++c.len] = a.val[i];
         }
     }
+    while(c.val[c.len]==0)
+    {
+        c.len--;
+    }
     if (c.exp)
     {
         c.type = INT_WITH_E;
@@ -32,6 +40,16 @@ BigNum standardize_exp(BigNum a)
 
 void print_BigNum(BigNum a, ll constraint)
 {
+    if(a.type==INF)
+    {
+        cout<<"INF";
+        return;
+    }
+    if(a.type==NaN)
+    {
+        cout<<"NaN";
+        return;
+    }
     string res = "";
     a = standardize_exp(a);
     bool flg = false;
@@ -128,4 +146,16 @@ data_type classifier(string s)
 string type_of(string s)
 {
     return type_name[classifier(s)];
+}
+
+bool is_zero(BigNum a)
+{
+    for(int i=1;i<=a.len;i++)
+    {
+        if(a.val[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
