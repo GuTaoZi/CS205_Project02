@@ -297,7 +297,7 @@ BigNum shorten(BigNum a,int lim);
 
 bool is_zero(BigNum a);
 
-string toString(BigNum a, ll constraint);
+string to_string(BigNum a, ll constraint);
 
 BigNum calc(BigNum a, BigNum b, char op);
 

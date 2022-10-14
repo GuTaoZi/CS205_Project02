@@ -207,7 +207,7 @@ BigNum calculate(string s)
             //this is a variable
             //printf("Variable detected.\n");
             q.push(aUtO(value_of(i)));
-            //cout << "Push " << toString(value_of(i), -1) << " into queue.\n";
+            //cout << "Push " << to_string(value_of(i), -1) << " into queue.\n";
         }
         else
         {

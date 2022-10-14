@@ -94,3 +94,13 @@ int add(string s)
     cout<<"Assign "<<rhs<<" to "<<lhs<<endl;
     return 1;
 }
+
+void value_list(int precision)
+{
+    printf("Variables declared: \n");
+    printf("Name\t Value\n");
+    for(auto it:var_list)
+    {
+        cout << it.first << "\t" << to_string(it.second,precision)<<"\n";
+    }
+}

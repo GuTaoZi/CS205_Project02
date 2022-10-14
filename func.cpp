@@ -21,7 +21,7 @@ BigNum exp(BigNum a)
     BigNum fac = BigNum(1);
     for (int i = 1; i <= PRECISION; i++)
     {
-        //cout<<i<<": "<<toString(res,-1);
+        //cout<<i<<": "<<to_string(res,-1);
         BigNum it = BigNum(i);
         fac = fac * it;
         res = res + ((a ^ it) / fac);
@@ -44,14 +44,14 @@ BigNum ln(BigNum a)
     }
     BigNum res = BigNum();
     BigNum t = shorten((a - BigNum(1)) / (a + BigNum(1)), 100);
-    //cout << "t: " << toString(t, -1)<<endl;
+    //cout << "t: " << to_string(t, -1)<<endl;
     for (int i = 1; i <= 2 * PRECISION; i++)
     {
         if (i & 1)
         {
-            //cout << i << ": " << toString(res, -1) << endl;
+            //cout << i << ": " << to_string(res, -1) << endl;
             BigNum it = BigNum(i);
-            //cout << "t^it: " << toString(t ^ it, -1) << endl;
+            //cout << "t^it: " << to_string(t ^ it, -1) << endl;
             res = res + BigNum(2) / it * shorten(t ^ it, 40);
             res = shorten(res, 40);
         }

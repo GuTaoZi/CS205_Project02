@@ -60,7 +60,7 @@ BigNum standardize_exp(BigNum a)
     return c;
 }
 
-string toString(BigNum a, ll constraint)
+string to_string(BigNum a, ll constraint)
 {
     if (a.type == INF)
     {

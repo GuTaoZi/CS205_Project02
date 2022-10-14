@@ -22,6 +22,8 @@ bool contains(string name);
 
 int add(string s);
 
+void value_list(int precision);
+
 
 
 #endif //PROJECT02_VARIA_H

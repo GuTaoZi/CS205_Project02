@@ -374,9 +374,9 @@ BigNum operator/(BigNum a, BigNum b)
         int q = 0;
         while (!(a < b))
         {
-            //cout<<toString(a,-1)<<" - "<<toString(b,-1)<<" = ";
+            //cout<<toString(a,-1)<<" - "<<to_string(b,-1)<<" = ";
             a = a - b;
-            //cout<<toString(a,-1)<<endl;
+            //cout<<to_string(a,-1)<<endl;
             q++;
             a = standardize_exp(a);
         }
@@ -420,17 +420,17 @@ BigNum operator^(BigNum a, BigNum b)
         BigNum res = BigNum(1);
         while(!is_zero(b))
         {
-            //cout<<"b: "<<toString(b,-1)<<endl;
+            //cout<<"b: "<<to_string(b,-1)<<endl;
             res=shorten(res,1000);
             if((b.val[1]&1)&&(!b.exp))
             {
-                //cout<<toString(res,-1)<<" * "<<toString(a,-1)<<" = ";
+                //cout<<toString(res,-1)<<" * "<<to_string(a,-1)<<" = ";
                 res=res*a;
-                //cout<<toString(res,-1)<<endl;
+                //cout<<to_string(res,-1)<<endl;
             }
             a=a*a;
             a=shorten(a,1000);
-            //cout<<toString(a,-1)<<endl;
+            //cout<<to_string(a,-1)<<endl;
             b=b/BigNum(2);
             b= shorten(b,b.len+b.exp);
         }
