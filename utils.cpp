@@ -102,7 +102,7 @@ string toString(BigNum a, ll constraint)
     {
         res = res + "0";
     }
-    if (res.compare("0") && (res.size() > 1 || a.exp))
+    if (res!="0" && (res.size() > 1 || a.exp))
     {
         ll new_exp = a.exp + cnt - 1;
         if (res.size() > 1)
@@ -180,94 +180,3 @@ bool is_zero(BigNum a)
     return true;
 }
 
-BigNum calc(BigNum a, BigNum b, char op)
-{
-    switch (op)
-    {
-        case '+':
-            return a + b;
-        case '-':
-            return a - b;
-        case '*':
-            return a * b;
-        case '/':
-            return a / b;
-        case '^':
-            return a ^ b;
-        default:
-        {
-            BigNum err = BigNum();
-            err.type = NaN;
-            return err;
-        }
-    }
-}
-
-
-void trim(string &s)
-{
-    int index = 0;
-    if (!s.empty())
-    {
-        while ((index = s.find(' ', index)) != string::npos)
-        {
-            s.erase(index, 1);
-        }
-    }
-}
-
-int priority(char op)
-{
-    switch (op)
-    {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
-        case '^':
-            return 3;
-        default:
-            return 0;
-    }
-}
-
-bool is_operator(char ch)
-{
-    switch (ch)
-    {
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-        case '^':
-        case '(':
-        case ')':
-            return true;
-        default:
-            return false;
-    }
-}
-
-BigNum calculate(string s)
-{
-    trim(s);
-    vector<string> sub;
-    string it = "";
-    for (char i: s)
-    {
-        if (is_operator(i))
-        {
-            if (it.compare(""))
-            {
-                sub.push_back(it);
-            }
-            sub.push_back("" + i);
-        }
-        else
-        {
-            it += i;
-        }
-    }
-}

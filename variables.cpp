@@ -7,6 +7,11 @@ const regex duplicate_eq(".*=.*=.*");
 const regex assignment(".*=.*");
 map<string, BigNum> var_list;
 
+BigNum value_of(string name)
+{
+    return var_list.find(name)->second;
+}
+
 void insert(string name,string val)
 {
     var_list.insert(pair<string,BigNum>(name,BigNum(val)));

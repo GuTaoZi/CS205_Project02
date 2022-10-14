@@ -205,6 +205,7 @@ BigNum operator+(BigNum a, BigNum b)
             c.len++;
         }
     }
+    c.exp--;
     c = standardize_exp(c);
     return c;
 }
@@ -415,15 +416,18 @@ BigNum operator^(BigNum a, BigNum b)
     while(!is_zero(b))
     {
         //cout<<"b: "<<toString(b,-1)<<endl;
-        a=shorten(a,1000);
-        res=shorten(res,1000);
-        if(b.val[1]&1)
+        a=shorten(a,2000);
+        res=shorten(res,2000);
+        if((b.val[1]&1)&&(!b.exp))
         {
+            //cout<<toString(res,-1)<<" * "<<toString(a,-1)<<" = ";
             res=res*a;
+            //cout<<toString(res,-1)<<endl;
         }
         a=a*a;
+        //cout<<toString(a,-1)<<endl;
         b=b/BigNum(2);
         b= shorten(b,b.len+b.exp);
     }
-    return res;
+    return nega_pow?res:(BigNum(1)/res);
 }
