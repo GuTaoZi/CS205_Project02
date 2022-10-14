@@ -15,7 +15,7 @@ const regex float_with_e("^[+-]?[0-9]+.[0-9]+e[+-]?[0-9]+$");
 const regex float_with_suffix("^[+-]?[0-9]+.[0-9]+[kKmMgGtT]$");
 const regex abbreviated_float("^[+-]?.[0-9]+$");
 
-const int DIVIDE_PRECISION = 500;
+const int DIVIDE_PRECISION = 200;
 
 enum data_type
 {
@@ -325,5 +325,13 @@ bool operator<=(BigNum a, BigNum b);
 bool operator>=(BigNum a, BigNum b);
 
 BigNum operator^(BigNum a,BigNum b);
+
+BigNum exp(BigNum a);
+
+BigNum ln(BigNum a);
+
+double to_double(BigNum a);
+
+BigNum to_BigNum(double a);
 
 #endif //REMAKE_CALCULATOR_BIG_NUM_H

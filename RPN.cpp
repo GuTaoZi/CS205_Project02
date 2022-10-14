@@ -1,4 +1,5 @@
 #include "big_num.h"
+#include "varia.h"
 #include "functions.h"
 #include <bits/stdc++.h>
 
@@ -26,7 +27,6 @@ BigNum calc(BigNum a, BigNum b, char op)
         }
     }
 }
-
 
 void trim(string &s)
 {
@@ -57,7 +57,7 @@ bool is_operator(char ch)
     }
 }
 
-const string function_name[] = {"cos", "sin", "exp", "ln"};
+const string function_name[] = {"cos", "sin", "exp", "ln","sqrt"};
 
 bool is_func(const string &name)
 {
@@ -89,6 +89,7 @@ int priority(const string &op)
     {
         return 4;
     }
+    return -1;
 }
 
 struct aUtO//just kidding :)
@@ -124,7 +125,7 @@ BigNum calculate(string s)
     string it = "";
     for (char i: s)
     {
-        if (is_operator(i))
+        if (is_operator(i)&&!(it[it.length()-1]=='e'&&i=='-'))
         {
             if (it != "")
             {
@@ -152,17 +153,17 @@ BigNum calculate(string s)
             //this is a operator/brace
             if (i == "(")
             {
-                printf("Left brace detected.\n");
+                //printf("Left brace detected.\n");
                 stk.push(aUtO(i));
                 continue;
             }
             else if (i == ")")
             {
-                printf("Right brace detected.\n");
+                //printf("Right brace detected.\n");
                 while (stk.top().s != "(")
                 {
                     q.push(stk.top());
-                    cout << "Push " << stk.top().s << " into queue from stack.\n";
+                    //cout << "Push " << stk.top().s << " into queue from stack.\n";
                     stk.pop();
                 }
                 stk.pop();
@@ -172,46 +173,46 @@ BigNum calculate(string s)
             {
                 while (!stk.empty() && priority(i) <= priority(stk.top().s))
                 {
-                    printf("Higher priority detected.\n");
+                    //printf("Higher priority detected.\n");
                     q.push(stk.top());
-                    cout << "Push " << stk.top().s << " into queue from stack.\n";
+                    //cout << "Push " << stk.top().s << " into queue from stack.\n";
                     stk.pop();
                 }
-                cout << "Push " << i << " into stack.\n";
+                //cout << "Push " << i << " into stack.\n";
                 stk.push(aUtO(i));
                 continue;
             }
         }
         else if (is_func(i))
         {
-            printf("Function detected.\n");
+            //printf("Function detected.\n");
             while (!stk.empty() && priority(i) <= priority(stk.top().s))
             {
                 q.push(stk.top());
-                cout << "Push " << stk.top().s << " into queue from stack.\n";
+                //cout << "Push " << stk.top().s << " into queue from stack.\n";
                 stk.pop();
             }
-            cout << "Push " << i << " into stack.\n";
+            //cout << "Push " << i << " into stack.\n";
             stk.push(aUtO(i));
         }
         else if (classifier(i) != NaN)
         {
             //this is a num
-            printf("Number detected.\n");
+            //printf("Number detected.\n");
             q.push(aUtO(BigNum(i)));
-            cout << "Push " << i << " into queue.\n";
+            //cout << "Push " << i << " into queue.\n";
         }
         else if (contains(i))
         {
             //this is a variable
-            printf("Variable detected.\n");
+            //printf("Variable detected.\n");
             q.push(aUtO(value_of(i)));
-            cout << "Push " << toString(value_of(i), -1) << " into queue.\n";
+            //cout << "Push " << toString(value_of(i), -1) << " into queue.\n";
         }
         else
         {
             //wrong input
-            cout << "Wrong input format! Type -h for help." << endl;
+            //cout << "Wrong input format! Type -h for help." << endl;
             BigNum err = BigNum();
             err.type = NaN;
             return err;
@@ -220,7 +221,7 @@ BigNum calculate(string s)
     while (!stk.empty())
     {
         q.push(stk.top());
-        cout << "Push " << stk.top().s << " into queue from stack.\n";
+        //cout << "Push " << stk.top().s << " into queue from stack.\n";
         stk.pop();
     }
     BigNum x, y;
@@ -245,7 +246,26 @@ BigNum calculate(string s)
             }
             else if (is_func(cur.s))
             {
-                //push function value
+                if(cur.s=="exp")
+                {
+                    stk.push(aUtO(to_BigNum(exp(to_double(x)))));
+                }
+                else if(cur.s=="ln")
+                {
+                    stk.push(aUtO(to_BigNum(log(to_double(x)))));
+                }
+                else if(cur.s=="cos")
+                {
+                    stk.push(aUtO(to_BigNum(cos(to_double(x)))));
+                }
+                else if(cur.s=="sin")
+                {
+                    stk.push(aUtO(to_BigNum(sin(to_double(x)))));
+                }
+                else if(cur.s=="sqrt")
+                {
+                    stk.push(aUtO(to_BigNum(sqrt(to_double(x)))));
+                }
             }
         }
     }

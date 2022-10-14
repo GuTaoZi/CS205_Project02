@@ -4,4 +4,4 @@ project(Project02)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(./)
-add_executable(Project02 main.cpp operators.cpp utils.cpp variables.cpp RPN.cpp)
+add_executable(Project02 main.cpp operators.cpp utils.cpp variables.cpp RPN.cpp func.cpp)

@@ -1,4 +1,5 @@
 #include "big_num.h"
+#include "functions.h"
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -397,6 +398,7 @@ BigNum operator/(BigNum a, BigNum b)
 
 BigNum operator^(BigNum a, BigNum b)
 {
+    //cout<<"calc"<<endl;
     bool nega_pow = b.sign;
     b.sign=true;
     if (is_zero(a))
@@ -412,22 +414,31 @@ BigNum operator^(BigNum a, BigNum b)
         return a;
     }
     a = standardize_exp(a);
-    BigNum res = BigNum(1);
-    while(!is_zero(b))
+    b= standardize_exp(b);
+    if(b.exp>=0)
     {
-        //cout<<"b: "<<toString(b,-1)<<endl;
-        a=shorten(a,2000);
-        res=shorten(res,2000);
-        if((b.val[1]&1)&&(!b.exp))
+        BigNum res = BigNum(1);
+        while(!is_zero(b))
         {
-            //cout<<toString(res,-1)<<" * "<<toString(a,-1)<<" = ";
-            res=res*a;
-            //cout<<toString(res,-1)<<endl;
+            //cout<<"b: "<<toString(b,-1)<<endl;
+            res=shorten(res,1000);
+            if((b.val[1]&1)&&(!b.exp))
+            {
+                //cout<<toString(res,-1)<<" * "<<toString(a,-1)<<" = ";
+                res=res*a;
+                //cout<<toString(res,-1)<<endl;
+            }
+            a=a*a;
+            a=shorten(a,1000);
+            //cout<<toString(a,-1)<<endl;
+            b=b/BigNum(2);
+            b= shorten(b,b.len+b.exp);
         }
-        a=a*a;
-        //cout<<toString(a,-1)<<endl;
-        b=b/BigNum(2);
-        b= shorten(b,b.len+b.exp);
+        return nega_pow?res:(BigNum(1)/res);
+    }//整数，使用快速幂
+    else
+    {
+        //cout<<"float power"<<endl;
+        return to_BigNum(exp(to_double(b)* log(to_double(a))));
     }
-    return nega_pow?res:(BigNum(1)/res);
 }

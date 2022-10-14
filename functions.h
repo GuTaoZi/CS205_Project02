@@ -1,21 +1,16 @@
 #ifndef PROJECT02_FUNCTIONS_H
 #define PROJECT02_FUNCTIONS_H
 
+#include "bits/stdc++.h"
 #include "big_num.h"
-#include <bits/stdc++.h>
-
 using namespace std;
 
-BigNum value_of(string name);
+BigNum exp(BigNum a);
 
-void insert(string name,string val);
+BigNum ln(BigNum a);
 
-void insert(string name,BigNum val);
+BigNum sin(BigNum a);
 
-bool remove(string name);
-
-bool modify(string name,BigNum val);
-
-bool contains(string name);
+BigNum cos(BigNum a);
 
 #endif //PROJECT02_FUNCTIONS_H

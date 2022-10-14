@@ -84,6 +84,13 @@ build CMakeFiles/Project02.dir/RPN.cpp.obj: CXX_COMPILER__Project02_Debug E$:/Cp
   OBJECT_DIR = CMakeFiles\Project02.dir
   OBJECT_FILE_DIR = CMakeFiles\Project02.dir
 
+build CMakeFiles/Project02.dir/func.cpp.obj: CXX_COMPILER__Project02_Debug E$:/Cpp/Project02/func.cpp || cmake_object_order_depends_target_Project02
+  DEP_FILE = CMakeFiles\Project02.dir\func.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  INCLUDES = -IE:/Cpp/Project02/.
+  OBJECT_DIR = CMakeFiles\Project02.dir
+  OBJECT_FILE_DIR = CMakeFiles\Project02.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Project02
@@ -92,7 +99,7 @@ build CMakeFiles/Project02.dir/RPN.cpp.obj: CXX_COMPILER__Project02_Debug E$:/Cp
 #############################################
 # Link the executable Project02.exe
 
-build Project02.exe: CXX_EXECUTABLE_LINKER__Project02_Debug CMakeFiles/Project02.dir/main.cpp.obj CMakeFiles/Project02.dir/operators.cpp.obj CMakeFiles/Project02.dir/utils.cpp.obj CMakeFiles/Project02.dir/variables.cpp.obj CMakeFiles/Project02.dir/RPN.cpp.obj
+build Project02.exe: CXX_EXECUTABLE_LINKER__Project02_Debug CMakeFiles/Project02.dir/main.cpp.obj CMakeFiles/Project02.dir/operators.cpp.obj CMakeFiles/Project02.dir/utils.cpp.obj CMakeFiles/Project02.dir/variables.cpp.obj CMakeFiles/Project02.dir/RPN.cpp.obj CMakeFiles/Project02.dir/func.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Project02.dir

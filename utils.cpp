@@ -1,5 +1,5 @@
 #include "big_num.h"
-#include "functions.h"
+#include "varia.h"
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -180,3 +180,35 @@ bool is_zero(BigNum a)
     return true;
 }
 
+double to_double(BigNum a)
+{
+    double res=0;
+    a=shorten(a,200);
+    for(int i=1;i<=a.len;i++)
+    {
+        res*=10;
+        res+=a.val[i];
+    }
+    if(a.exp<0)
+    {
+        for(int i=1;i<=-a.exp;i++)
+        {
+            res/=10;
+        }
+    }
+    else
+    {
+        for(int i=1;i<=a.exp;i++)
+        {
+            res*=10;
+        }
+    }
+    return res;
+}
+
+BigNum to_BigNum(double x)
+{
+    stringstream ss;
+    ss<<setprecision(15)<<x;
+    return BigNum(ss.str());
+}

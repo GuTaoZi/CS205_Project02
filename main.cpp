@@ -1,18 +1,42 @@
-#include <iostream>
+#include "bits/stdc++.h"
 #include "big_num.h"
 #include "functions.h"
+#include "varia.h"
 
 using namespace std;
 
 int main()
 {
-//    string s1,s2;
-//    char op;
-//    cin>>s1>>op>>s2;
-//    BigNum a=BigNum(s1);
-//    BigNum b=BigNum(s2);
-//    cout<<toString(calc(a, b, op), -1);
-    string s;
-    getline(cin, s);
-    cout << toString(calculate(s), -1);
+    string s="";
+    while(s!="#quit")
+    {
+        printf(">>>");
+        getline(cin, s);
+        trim(s);
+        if(s=="#quit")
+        {
+            return 0;
+        }
+        else if(s=="#help")
+        {
+
+        }
+        else
+        {
+            int flag=add(s);
+            if(flag==0)
+            {
+                cout << toString(calculate(s), -1)<<endl;
+                continue;
+            }
+            else if(flag==-1)
+            {
+                printf("Wrong format of equation detected, pls try again. Type #help for help.\n");
+            }
+            else if(flag==-2)
+            {
+                printf("Wrong format of value detected, pls try again. Type #help for help.\n");
+            }
+        }
+    }
 }
