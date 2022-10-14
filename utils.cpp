@@ -1,13 +1,35 @@
 #include "big_num.h"
+#include "functions.h"
 #include <bits/stdc++.h>
+
 using namespace std;
 
 const string type_name[] = {"NaN", "PURE_INT", "INT_WITH_E", "INT_WITH_SUFFIX", "PURE_FLOAT", "FLOAT_WITH_E",
                             "FLOAT_WITH_SUFFIX", "ABBR_FLOAT"};
 
+BigNum shorten(BigNum a, int lim)
+{
+    if (a.len <= lim)
+    {
+        return a;
+    }
+    int dif = a.len - lim;
+    for (int i = 1; i <= lim; i++)
+    {
+        a.val[i] = a.val[i + dif];
+    }
+    for (int i = lim + 1; i <= a.len; i++)
+    {
+        a.val[i] = 0;
+    }
+    a.exp += dif;
+    a.len = lim;
+    return a;
+}
+
 BigNum standardize_exp(BigNum a)
 {
-    if(is_zero(a))
+    if (is_zero(a))
     {
         return BigNum();
     }
@@ -27,7 +49,7 @@ BigNum standardize_exp(BigNum a)
             c.val[++c.len] = a.val[i];
         }
     }
-    while(c.val[c.len]==0)
+    while (c.val[c.len] == 0)
     {
         c.len--;
     }
@@ -38,17 +60,15 @@ BigNum standardize_exp(BigNum a)
     return c;
 }
 
-void print_BigNum(BigNum a, ll constraint)
+string toString(BigNum a, ll constraint)
 {
-    if(a.type==INF)
+    if (a.type == INF)
     {
-        cout<<"INF";
-        return;
+        return a.sign ? "INF" : "-INF";
     }
-    if(a.type==NaN)
+    if (a.type == NaN)
     {
-        cout<<"NaN";
-        return;
+        return "NaN";
     }
     string res = "";
     a = standardize_exp(a);
@@ -104,7 +124,7 @@ void print_BigNum(BigNum a, ll constraint)
     {
         res = "-" + res;
     }
-    cout << res;
+    return res;
 }
 
 data_type classifier(string s)
@@ -150,12 +170,104 @@ string type_of(string s)
 
 bool is_zero(BigNum a)
 {
-    for(int i=1;i<=a.len;i++)
+    for (int i = 1; i <= a.len; i++)
     {
-        if(a.val[i])
+        if (a.val[i])
         {
             return false;
         }
     }
     return true;
+}
+
+BigNum calc(BigNum a, BigNum b, char op)
+{
+    switch (op)
+    {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+        case '^':
+            return a ^ b;
+        default:
+        {
+            BigNum err = BigNum();
+            err.type = NaN;
+            return err;
+        }
+    }
+}
+
+
+void trim(string &s)
+{
+    int index = 0;
+    if (!s.empty())
+    {
+        while ((index = s.find(' ', index)) != string::npos)
+        {
+            s.erase(index, 1);
+        }
+    }
+}
+
+int priority(char op)
+{
+    switch (op)
+    {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        case '^':
+            return 3;
+        default:
+            return 0;
+    }
+}
+
+bool is_operator(char ch)
+{
+    switch (ch)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '^':
+        case '(':
+        case ')':
+            return true;
+        default:
+            return false;
+    }
+}
+
+BigNum calculate(string s)
+{
+    trim(s);
+    vector<string> sub;
+    string it = "";
+    for (char i: s)
+    {
+        if (is_operator(i))
+        {
+            if (it.compare(""))
+            {
+                sub.push_back(it);
+            }
+            sub.push_back("" + i);
+        }
+        else
+        {
+            it += i;
+        }
+    }
 }

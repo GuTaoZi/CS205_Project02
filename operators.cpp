@@ -3,8 +3,29 @@
 
 using namespace std;
 
-bool operator<(BigNum a, BigNum b)//抛开符号比大小
+bool operator<(BigNum a, BigNum b)
 {
+    if (a.type == INF)
+    {
+        return false;
+    }
+    if (b.type == INF)
+    {
+        return true;
+    }
+    if (a.type == NaN || b.type == NaN)
+    {
+        return false;
+    }
+    if (a.sign xor b.sign)
+    {
+        return b.sign;
+    }
+    if (!(a.sign) && !(b.sign))
+    {
+        a.sign = b.sign = true;
+        return b < a;
+    }
     a = standardize_exp(a);
     b = standardize_exp(b);
     if ((a.exp + a.len) == (b.exp + b.len))
@@ -40,14 +61,47 @@ bool operator<(BigNum a, BigNum b)//抛开符号比大小
     }
 }
 
+bool operator==(BigNum a, BigNum b)
+{
+    if (a < b || b < a)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool operator>(BigNum a, BigNum b)
+{
+    return b < a;
+}
+
+bool operator>=(BigNum a, BigNum b)
+{
+    return a > b || a == b;
+}
+
+bool operator<=(BigNum a, BigNum b)
+{
+    return a < b || a == b;
+}
+
 BigNum operator*(BigNum a, BigNum b)
 {
+    if (a.type == NaN || b.type == NaN)
+    {
+        return a.type == NaN ? a : b;
+    }
+    if (a.type == INF || b.type == INF)
+    {
+        return a.type == INF ? a : b;
+    }
     a = standardize_exp(a);
     b = standardize_exp(b);
     BigNum c;
     c.exp = a.exp + b.exp;
     c.sign = !(a.sign xor b.sign);
     c.len = a.len + b.len + 1;
+    a.sign = b.sign = true;
     if (a < b)
     {
         swap(a, b);
@@ -74,6 +128,14 @@ BigNum operator*(BigNum a, BigNum b)
 
 BigNum operator+(BigNum a, BigNum b)
 {
+    if (a.type == NaN || b.type == NaN)
+    {
+        return a.type == NaN ? a : b;
+    }
+    if (a.type == INF || b.type == INF)
+    {
+        return a.type == INF ? a : b;
+    }
     a = standardize_exp(a);
     b = standardize_exp(b);
     BigNum c;
@@ -96,7 +158,8 @@ BigNum operator+(BigNum a, BigNum b)
         }
         else
         {
-            c.sign = false;
+            a.sign = b.sign = true;
+            return -(a + b);
         }
     }
     if (a < b)
@@ -146,24 +209,18 @@ BigNum operator+(BigNum a, BigNum b)
     return c;
 }
 
-bool operator==(BigNum a, BigNum b)
-{
-    if (a < b || b < a)
-    {
-        return false;
-    }
-    return true;
-}
-
 BigNum operator-(BigNum a)
 {
-    BigNum b = a;
-    b.sign = !b.sign;
-    return b;
+    a.sign = !a.sign;
+    return a;
 }
 
 BigNum operator-(BigNum a, BigNum b)
 {
+    if (a.type == NaN || b.type == NaN)
+    {
+        return a.type == NaN ? a : b;
+    }
     a = standardize_exp(a);
     b = standardize_exp(b);
     BigNum c = BigNum();
@@ -199,10 +256,23 @@ BigNum operator-(BigNum a, BigNum b)
     }
     else if (a == b)
     {
+        if (a.type == INF || b.type == INF)
+        {
+            return a.type == INF ? a : b;
+        }
         return BigNum();
     }
     else
     {
+        if (a.type == INF)
+        {
+            return a;
+        }
+        if (b.type == INF)
+        {
+            b.sign = false;
+            return b;
+        }
         if (a.exp >= b.exp)//a后补0
         {
             c.sign = true;
@@ -233,13 +303,13 @@ BigNum operator-(BigNum a, BigNum b)
         {
             c.sign = true;
             c.exp = a.exp;
-            c.len = a.len;
+            c.len = a.len+1;
             for (int i = 1; i <= c.len; i++)
             {
                 c.val[i] = a.val[i];
             }
             int borrow = 0;
-            for (int i = 1; i <= b.len; i++)
+            for (int i = 1; i <= b.len+1; i++)
             {
                 if (c.val[i + b.exp - a.exp] < borrow + b.val[i])
                 {
@@ -260,24 +330,23 @@ BigNum operator-(BigNum a, BigNum b)
 
 BigNum operator/(BigNum a, BigNum b)
 {
-    if(is_zero(b))
+    if (is_zero(b))
     {
-        BigNum err=BigNum();
-        err.type= is_zero(a)?NaN:INF;
+        BigNum err = BigNum();
+        err.sign = !(a.sign xor b.sign);
+        err.type = is_zero(a) ? NaN : INF;
         return err;
     }
     BigNum c = BigNum();
-    c.sign=!(a.sign xor b.sign);
-    a.sign=b.sign= true;
-    c.exp=a.exp-b.exp;
-    c.len=0;
-    int expa=a.exp;
-    int expb=b.exp;
-    a.exp=0;
-    b.exp=0;
-    if(a<b)//扩大a直到a>b
+    c.sign = !(a.sign xor b.sign);
+    a.sign = b.sign = true;
+    c.exp = a.exp - b.exp;
+    c.len = 0;
+    a.exp = 0;
+    b.exp = 0;
+    if (a < b)//扩大a直到a>b
     {
-        while(a<b)
+        while (a < b)
         {
             //printf("%d--\n",a.exp);
             a.exp++;
@@ -287,9 +356,9 @@ BigNum operator/(BigNum a, BigNum b)
     else
     {
         b.exp++;
-        if(b<a)//缩小a直到a<10b;
+        if (b < a)//缩小a直到a<10b;
         {
-            while(b<a)
+            while (b < a)
             {
                 //printf("%d--\n",a.exp);
                 a.exp--;
@@ -298,26 +367,63 @@ BigNum operator/(BigNum a, BigNum b)
         }
         b.exp--;
     }//现在是10b>a>b的情况
-    while(c.len<DIVIDE_PRECISION)
+    while (c.len < DIVIDE_PRECISION)
     {
-        int q=0;
-        while(!(a<b))
+        int q = 0;
+        while (!(a < b))
         {
-            a=a-b;
+            //cout<<toString(a,-1)<<" - "<<toString(b,-1)<<" = ";
+            a = a - b;
+            //cout<<toString(a,-1)<<endl;
             q++;
-            a= standardize_exp(a);
+            a = standardize_exp(a);
         }
-        printf("q:%d\n",q);
-        c.val[++c.len]=q;
+        //printf("q:%d\n", q);
+        c.val[++c.len] = q;
         a.exp++;
-        a= standardize_exp(a);
+        a = standardize_exp(a);
         c.exp--;
-        if(is_zero(a)) break;
+        if (is_zero(a))
+        { break; }
     }
     c.exp++;
-    for(int i=1;i<=(c.len>>1);i++)
+    for (int i = 1; i <= (c.len >> 1); i++)
     {
-        swap(c.val[i],c.val[c.len-i+1]);
+        swap(c.val[i], c.val[c.len - i + 1]);
     }
     return c;
+}
+
+BigNum operator^(BigNum a, BigNum b)
+{
+    bool nega_pow = b.sign;
+    b.sign=true;
+    if (is_zero(a))
+    {
+        return BigNum();
+    }
+    if (is_zero(b))
+    {
+        return BigNum(1);
+    }
+    if (a.type == INF)
+    {
+        return a;
+    }
+    a = standardize_exp(a);
+    BigNum res = BigNum(1);
+    while(!is_zero(b))
+    {
+        //cout<<"b: "<<toString(b,-1)<<endl;
+        a=shorten(a,1000);
+        res=shorten(res,1000);
+        if(b.val[1]&1)
+        {
+            res=res*a;
+        }
+        a=a*a;
+        b=b/BigNum(2);
+        b= shorten(b,b.len+b.exp);
+    }
+    return res;
 }

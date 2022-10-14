@@ -19,7 +19,7 @@ const int DIVIDE_PRECISION = 500;
 
 enum data_type
 {
-    INF,NaN, PURE_INT, INT_WITH_E, INT_WITH_SUFFIX, PURE_FLOAT, FLOAT_WITH_E, FLOAT_WITH_SUFFIX, ABBR_FLOAT
+    INF, NaN, PURE_INT, INT_WITH_E, INT_WITH_SUFFIX, PURE_FLOAT, FLOAT_WITH_E, FLOAT_WITH_SUFFIX, ABBR_FLOAT
 };
 
 // PURE_INT : 19260817
@@ -274,14 +274,34 @@ struct BigNum
             }
         }
     }
+
+    BigNum(ll x)
+    {
+        len=0;
+        memset(val, 0, sizeof(val));
+        sign=x>0;
+        exp=0;
+        while(x)
+        {
+            val[++len]=x%10;
+            x/=10;
+        }
+        type=PURE_INT;
+    }
 };
 
 //utils
 BigNum standardize_exp(BigNum a);
 
+BigNum shorten(BigNum a,int lim);
+
 bool is_zero(BigNum a);
 
-void print_BigNum(BigNum a, ll constraint);
+string toString(BigNum a, ll constraint);
+
+BigNum calc(BigNum a, BigNum b, char op);
+
+BigNum calculate(string s);
 
 //operators
 BigNum operator+(BigNum a, BigNum b);
@@ -298,6 +318,12 @@ bool operator<(BigNum a, BigNum b);
 
 bool operator==(BigNum a, BigNum b);
 
+bool operator>(BigNum a, BigNum b);
 
+bool operator<=(BigNum a, BigNum b);
+
+bool operator>=(BigNum a, BigNum b);
+
+BigNum operator^(BigNum a,BigNum b);
 
 #endif //REMAKE_CALCULATOR_BIG_NUM_H
