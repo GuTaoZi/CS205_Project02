@@ -1,3 +1,0 @@
-E:/Cpp/Project02/cmake-build-debug/CMakeFiles/Project02.dir
-E:/Cpp/Project02/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/Cpp/Project02/cmake-build-debug/CMakeFiles/rebuild_cache.dir

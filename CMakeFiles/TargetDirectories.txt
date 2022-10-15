@@ -1,0 +1,3 @@
+/mnt/e/Cpp/Proj02/CMakeFiles/better_calc.dir
+/mnt/e/Cpp/Proj02/CMakeFiles/edit_cache.dir
+/mnt/e/Cpp/Proj02/CMakeFiles/rebuild_cache.dir

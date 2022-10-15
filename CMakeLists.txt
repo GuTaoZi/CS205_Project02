@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16)
 project(Project02)
-
-set(CMAKE_CXX_STANDARD 14)
-
-include_directories(./)
-add_executable(Project02 main.cpp operators.cpp utils.cpp variables.cpp RPN.cpp func.cpp)
+aux_source_directory(./src DIR_SRC)
+include_directories(./inc)
+add_executable(better_calc ${DIR_SRC})
