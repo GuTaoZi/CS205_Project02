@@ -1,3 +1,5 @@
+* $\LaTeX$ of README.md may fail to display on github. For better experience, pls check [report in pdf format.](https://github.com/GuTaoZi/CS205_Project02/blob/master/report.pdf)
+
 # CS205 C/ C++ Programming Project02 - A Better Calculator
 
 **Name**: 樊斯特(Fan Site)
