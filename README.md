@@ -1,4 +1,4 @@
-# CS205 C/ C++ Programming - Lab Assignment Template
+# CS205 C/ C++ Programming Project02 - A Better Calculator
 
 **Name**: 樊斯特(Fan Site)
 
