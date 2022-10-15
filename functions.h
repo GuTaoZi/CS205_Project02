@@ -3,14 +3,11 @@
 
 #include "bits/stdc++.h"
 #include "big_num.h"
+
 using namespace std;
 
 BigNum exp(BigNum a);
 
 BigNum ln(BigNum a);
-
-BigNum sin(BigNum a);
-
-BigNum cos(BigNum a);
 
 #endif //PROJECT02_FUNCTIONS_H

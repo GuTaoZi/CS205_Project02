@@ -58,13 +58,3 @@ BigNum ln(BigNum a)
     }
     return res;
 }
-
-BigNum sin(BigNum a)
-{
-
-}
-
-BigNum cos(BigNum a)
-{
-
-}
