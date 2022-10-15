@@ -589,23 +589,23 @@ void value_list(int precision);//打印变量列表
 
 Bunched Test case #1: 基础五则运算
 
-![image-20221016015749671](C:\Users\first_fan\AppData\Roaming\Typora\typora-user-images\image-20221016015749671.png)
+<img src="https://s2.loli.net/2022/10/16/hgA8YTn1KLy6lrw.png" alt="image-20221016015749671.png" style="zoom:50%;" />
 
 Bunched Test case #2: 高精度五则运算
 
-![image-20221016020050214](C:\Users\first_fan\AppData\Roaming\Typora\typora-user-images\image-20221016020050214.png)
+![image-20221016020050214.png](https://s2.loli.net/2022/10/16/Xh5PFVf3Z24WDtx.png)
 
 Bunched Test case #3: 变量赋值与运算
 
-![image-20221016020446449](C:\Users\first_fan\AppData\Roaming\Typora\typora-user-images\image-20221016020446449.png)
+![image-20221016020446449.png](https://s2.loli.net/2022/10/16/3V6ZWpIDQM7z8m4.png)
 
 Bunched Test case #4: 小数幂与函数
 
-<img src="C:\Users\first_fan\AppData\Roaming\Typora\typora-user-images\image-20221016021351071.png" alt="image-20221016021351071" style="zoom:50%;" />
+<img src="https://s2.loli.net/2022/10/16/zMZekKmqWVUT8Qv.png" alt="image-20221016021351071.png" style="zoom:50%;" />
 
 Bunched Test case #5: 用户友好设计
 
-<img src="C:\Users\first_fan\AppData\Roaming\Typora\typora-user-images\image-20221016021628241.png" alt="image-20221016021628241" style="zoom:50%;" />
+<img src="https://s2.loli.net/2022/10/16/lR7HhZjQI2sozcf.png" alt="image-20221016021628241.png" style="zoom:50%;" />
 
 ## Part 4 - Difficulties & Solutions
 
