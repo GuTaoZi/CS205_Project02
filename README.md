@@ -223,7 +223,7 @@ CPP\PROJ02
 
 [`main.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/main.cpp)为运行主函数，可执行文件为：`./better_calc`，为实现交互式输入输出，本项目未使用命令行输入。
 
-[`big_num.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/big_num.h)为高精度浮点数头文件，其操作符重载实现位于[`operator.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/operator.cpp)，过程中使用的函数实现位于[`utils.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/utils.cpp)，逆波兰表达式的处理和求值位于[`RPN.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/RPN.cpp)。
+[`big_num.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/big_num.h)为高精度浮点数头文件，其操作符重载实现位于[`operators.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/operators.cpp)，过程中使用的函数实现位于[`utils.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/utils.cpp)，逆波兰表达式的处理和求值位于[`RPN.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/RPN.cpp)。
 
 [`functions.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/functions.h)为数学函数头文件，其实现位于[`func.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/func.cpp)。
 
