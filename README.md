@@ -1,6 +1,8 @@
 * $\LaTeX$ of README.md may fail to display on github. For better experience, pls check [report in pdf format.](https://github.com/GuTaoZi/CS205_Project02/blob/master/report.pdf)
 
-# CS205 C/ C++ Programming Project02 - A Better Calculator
+# CS205 C/ C++ Programming Project02 
+
+# A Better Calculator
 
 **Name**: 樊斯特(Fan Site)
 
@@ -219,15 +221,17 @@ CPP\PROJ02
         variables.cpp
 ```
 
-`main.cpp`为运行主函数，可执行文件为：`./better_calc`，为实现交互式输入输出，本项目未使用命令行输入。
+[`main.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/main.cpp)为运行主函数，可执行文件为：`./better_calc`，为实现交互式输入输出，本项目未使用命令行输入。
 
-`big_num.h`为高精度浮点数头文件，其操作符重载实现位于`operator.cpp`，过程中使用的函数实现位于utils.cpp，逆波兰表达式的处理和求值位于`RPN.cpp`。
+[`big_num.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/big_num.h)为高精度浮点数头文件，其操作符重载实现位于[`operator.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/operator.cpp)，过程中使用的函数实现位于[`utils.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/utils.cpp)，逆波兰表达式的处理和求值位于[`RPN.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/RPN.cpp)。
 
-`function.h`为数学函数头文件，其实现位于`func.cpp`。
+[`functions.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/functions.h)为数学函数头文件，其实现位于[`func.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/func.cpp)。
 
-`varia.h`为变量头文件，其实现和常用函数位于`variables.cpp`。
+[`varia.h`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/varia.h)为变量头文件，其实现和常用函数位于[`variables.cpp`](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/variables.cpp)。
 
 ### 二元运算的重载
+
+本节实现于[operators.cpp](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/operators.cpp)，实现了加减乘除乘方五种二元运算的重载。
 
 #### 减法
 
@@ -481,11 +485,186 @@ BigNum operator^(BigNum a, BigNum b)
 }
 ```
 
+### 后缀表达式的转化和计算
+
+本节实现于[RPN.cpp](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/RPN.cpp)，主要实现了两个功能，具体原理上文已述：
+
+1. 将中缀表达式转化为后缀表达式
+2. 计算后缀表达式
+
+由于队列和栈中元素可能是操作符/函数/数字，因此开玩笑式的建立了aUtO结构体，作为栈和队列的类型，以实现不同类型的数据可以用同一个数据结构存储的效果。
+
+```c++
+struct aUtO//just kidding :)
+{
+    BigNum v;
+    string s;
+    bool is_num;
+    
+    aUtO(BigNum v)
+    {
+        this->v = v;
+        is_num = true;
+    }
+    aUtO(string s)
+    {
+        this->s = s;
+        is_num = false;
+    }
+    aUtO()
+    {
+        this->s = "";
+        is_num = false;
+    }
+};
+
+BigNum calculate(string s)
+{
+    trim(s);
+    vector<string> sub;
+    string it = "";
+    for (char i: s)
+    {
+        if (is_operator(i)&&!(it[it.length()-1]=='e'&&i=='-'))
+        {
+            if (it != "")
+            {
+                sub.push_back(it);
+                it="";
+            }
+            sub.push_back(string(1,i));
+        }
+        else
+        {
+            it += string(1,i);
+        }
+    }
+    if(it!="")
+    {
+        sub.push_back(it);
+        it="";
+    }
+    queue<aUtO> q;
+    stack<aUtO> stk;
+    for (string i: sub)
+    {
+        if (i.length() == 1 && is_operator(i[0]))
+        {
+            if (i == "(")
+            {
+                stk.push(aUtO(i));
+                continue;
+            }
+            else if (i == ")")
+            {
+                while (stk.top().s != "(")
+                {
+                    q.push(stk.top());
+                    stk.pop();
+                }
+                stk.pop();
+                continue;
+            }
+            else
+            {
+                while (!stk.empty() && priority(i) <= priority(stk.top().s))
+                {
+                    q.push(stk.top());
+                    stk.pop();
+                }
+                stk.push(aUtO(i));
+                continue;
+            }
+        }
+        else if (is_func(i))
+        {
+            while (!stk.empty() && priority(i) <= priority(stk.top().s))
+            {
+                q.push(stk.top());
+                stk.pop();
+            }
+            stk.push(aUtO(i));
+        }
+        else if (classifier(i) != NaN)
+        {
+            q.push(aUtO(BigNum(i)));
+        }
+        else if (contains(i))
+        {
+            q.push(aUtO(value_of(i)));
+        }
+        else
+        {
+            BigNum err = BigNum();
+            err.type = NaN;
+            return err;
+        }
+    }
+    while (!stk.empty())
+    {
+        q.push(stk.top());
+        stk.pop();
+    }
+    BigNum x, y;
+    aUtO cur, tmp;
+    while (!q.empty())
+    {
+        cur = q.front();
+        q.pop();
+        if (cur.is_num)
+        {
+            stk.push(cur);
+        }
+        else
+        {
+            x = stk.top().v;
+            stk.pop();
+            if (is_operator(cur.s[0]))
+            {
+                y = stk.top().v;
+                stk.pop();
+                stk.push(calc(y, x, cur.s[0]));
+            }
+            else if (is_func(cur.s))
+            {
+                if(cur.s=="exp")
+                {
+                    stk.push(aUtO(to_BigNum(exp(to_double(x)))));
+                }
+                else if(cur.s=="ln")
+                {
+                    stk.push(aUtO(to_BigNum(log(to_double(x)))));
+                }
+                else if(cur.s=="cos")
+                {
+                    stk.push(aUtO(to_BigNum(cos(to_double(x)))));
+                }
+                else if(cur.s=="sin")
+                {
+                    stk.push(aUtO(to_BigNum(sin(to_double(x)))));
+                }
+                else if(cur.s=="sqrt")
+                {
+                    stk.push(aUtO(to_BigNum(sqrt(to_double(x)))));
+                }
+            }
+        }
+    }
+    return stk.top().v;
+}
+```
+
+
+
 ### 级数近似计算函数
+
+本节代码位于[func.cpp](https://github.com/GuTaoZi/CS205_Project02/blob/master/src/func.cpp)，由于中途易辙，此处实现了自然指数和自然对数两个函数。
 
 虽然最后决定弃用，但此处仍展示其思路。
 
-大致流程为：预处理→计算级数求和→得到结果。从运算复杂度而言，这两个函数的实现对于时间的耗费过大，并不适用于题设环境。
+大致流程为：预处理→计算级数求和→得到结果。
+
+从运算复杂度而言，这两个函数的实现对于时间的耗费过大，并不适用于题设环境。
 
 #### $e^x$
 
