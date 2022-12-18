@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/better_calc.dir/src/RPN.cpp.o CMakeFiles/better_calc.dir/src/func.cpp.o CMakeFiles/better_calc.dir/src/main.cpp.o CMakeFiles/better_calc.dir/src/operators.cpp.o CMakeFiles/better_calc.dir/src/utils.cpp.o CMakeFiles/better_calc.dir/src/variables.cpp.o -o better_calc 
